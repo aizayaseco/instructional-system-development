@@ -1,0 +1,2296 @@
+<!-- 
+Author: Aizaya L. Seco && Donn Jerico B. Belmonte
+Date: March 10, 2018
+Description: main html5 for the Instruction Systems Development
+ -->
+
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="utf-8"/>
+    <title>Instructional Systems Development</title>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id="bg">
+  		<img src="assets/bg2.jpg" alt="">
+	</div>
+	<div ng-controller="mainController as main">
+		<div  class="wrapper">
+			<br>
+			<div class="ui grid">
+			  <div class="seven column row">
+			    <div class="right floated column">
+					<i ng-if="!main.musicOn" ng-click="main.updateMusic()" class="huge link volume off icon"></i>
+					<i ng-if="main.musicOn" ng-click="main.updateMusic()" class="huge link volume up icon"></i>
+			    	<!-- <a  href="stats.html" class="ui button" id="menu" data-content="View scores and statistics">Student Performance</a> -->
+			    </div>
+			  </div>
+			</div>
+			<br>
+			<div class="ui column stackable center page grid">
+				<div class="two wide column"></div>
+				  <div class="ui shape">
+					  <div class="sides">
+					  	<div class="ui dimmer" ng-click="main.playSide()">
+					  		<div class="content">
+	      					<h2 class="ui inverted header">PAUSED</h2><br>
+	      					<!-- <i id="toggle" ng-click="main.playSide()" class="huge link inverted caret square right icon"></i> -->
+	      					</div>
+					  	</div>
+					    <div class="side active 1">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"> 
+					    			<p class="write-name">Please type your name:</p>
+						    		<div class="ui large fluid action input center lower">
+								    	<input type="text" name="name" ng-model="main.student.name" required>
+								    </div><br><br>
+								   <center> <button ng-click="main.nextSide()" class="ui big button" > <!--idea of hasStarted-->
+									  OK
+									</button></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 2">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					    		<!-- <a class="ui green label"> Level 1</a> -->
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 1</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<!-- main.questions[0][0][0] -->
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<!-- main.questions[0][0][0] -->
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>	
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+												<div class="ui input focus">
+												  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+												  <button ng-click="main.answering()" class="ui green right button">
+												    Answer
+												  </button>
+												  <div ng-if="main.noAns" class="ui left pointing red basic label">
+												      Please enter your answer
+												    </div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 3">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 4">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 2</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<!-- main.questions[0][0][0] -->
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<!-- main.questions[0][0][0] -->
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+														<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()" class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column"  ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					    <div class="side 5">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 6">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 3</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>			
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 7">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 8">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					    		<!-- <a class="ui green label"> Level 1</a> -->
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 4</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>	
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+												<div class="ui input focus">
+												  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+												  <button ng-click="main.answering()"class="ui green right button">
+												    Answer
+												  </button>
+												  <div ng-if="main.noAns" class="ui left pointing red basic label">
+												      Please enter your answer
+												    </div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 9">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 10">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 5</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+														<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column"  ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					    <div class="side 11">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 12">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 6</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>			
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 13">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					     <div class="side 14">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					    		<!-- <a class="ui green label"> Level 1</a> -->
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 7</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>	
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+												<div class="ui input focus">
+												  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+												  <button ng-click="main.answering()"class="ui green right button">
+												    Answer
+												  </button>
+												  <div ng-if="main.noAns" class="ui left pointing red basic label">
+												      Please enter your answer
+												    </div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 15">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 16">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 8</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+														<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column"  ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					    <div class="side 17">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 18">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 9</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>			
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 19">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 20">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					    		<!-- <a class="ui green label"> Level 1</a> -->
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 10</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>	
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+												<div class="ui input focus">
+												  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+												  <button ng-click="main.answering()"class="ui green right button">
+												    Answer
+												  </button>
+												  <div ng-if="main.noAns" class="ui left pointing red basic label">
+												      Please enter your answer
+												    </div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 21">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 22">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 11</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+														<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column"  ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					    <div class="side 23">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 24">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 12</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>			
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 25">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 26">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					    		<!-- <a class="ui green label"> Level 1</a> -->
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 13</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>	
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+												<div class="ui input focus">
+												  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+												  <button ng-click="main.answering()"class="ui green right button">
+												    Answer
+												  </button>
+												  <div ng-if="main.noAns" class="ui left pointing red basic label">
+												      Please enter your answer
+												    </div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 27">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 28">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 14</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+														<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column"  ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					    <div class="side 29">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 30">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 15</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>			
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 31">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 32">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					    		<!-- <a class="ui green label"> Level 1</a> -->
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 16</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+											</div>	
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+												<div class="ui input focus">
+												  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+												  <button ng-click="main.answering()"class="ui green right button">
+												    Answer
+												  </button>
+												  <div ng-if="main.noAns" class="ui left pointing red basic label">
+												      Please enter your answer
+												    </div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 33">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 34">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 17</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][0]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][0]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][0]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div ng-if="main.itemLevel%2!=0" class="ui card number">
+													<div class="ui four column grid">
+														<div ng-repeat="i in main.getTimes(main.questions[main.level-1][main.itemLevel-1][1]) track by $index" class="column">
+															<img class="ui tiny image" ng-src="{{main.pictures.pictures[main.currPic]}}">
+														</div>
+													</div>
+													<div class="card-pic-content">
+													    <center class="pic-number-name">{{main.questions[main.level-1][main.itemLevel-1][1]}}
+														<ng-pluralize count="main.questions[main.level-1][main.itemLevel-1][1]" when="{'0': main.pictures.name[main.currPic], '1': main.pictures.name[main.currPic], 'other': main.pictures.names[main.currPic]}"></ng-pluralize></center>
+													  </div>
+												</div>
+												<div ng-if="main.itemLevel%2==0" class="ui card number">
+														<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column"  ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					    <div class="side 35">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 36">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      		<div class="content">
+							        <div class="center">
+							        	<div class="ui grid">
+							        		<div class="five column row">
+							        			<div class="left floated column">
+							        				<h1>LEVEL 18</h1>
+							        			</div>
+											    <div class="right floated column">
+											    	<i ng-click="main.pauseSide()" class="big link pause circle icon"></i>
+											    	<button ng-click="main.resetSide()" class="ui secondary button">
+													  QUIT
+													</button>
+											    </div>
+											  </div>
+							        	</div>
+							        	<div  ng-if="main.cardview==1" class="ui grid">
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][0]}}</center>
+												</div>
+											</div>
+											
+											<div class="two wide column">
+												<div class="ui icon header center plus-sign">
+												<i class="plus icon"></i>
+												</div>
+											</div>
+
+											<div class="seven wide column">
+												<div class="ui card number">
+													<center class="no-pic-number">{{main.questions[main.level-1][main.itemLevel-1][1]}}</center>			
+												</div>
+											</div>
+											<div class="five wide column"></div>
+											<div class="nine wide column">
+											<div class="ui input focus">
+											  <input type="text" ng-model="main.answer" value="{{main.answer}}">
+											  <button ng-click="main.answering()"class="ui green right button">
+											    Answer
+											  </button>
+											  <div ng-if="main.noAns" class="ui left pointing red basic label">
+											      Please enter your answer
+											    </div>
+											</div>
+											</div>
+											<div class="two wide column"></div>	
+										</div>
+										<div  ng-if="main.cardview==2" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui positive massive message">
+													<div class="header">
+													    	Your answer {{main.answer}} is correct!
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div  ng-if="main.cardview==3" class="ui grid">
+											<div class="two wide column"></div>
+											<div class="twelve wide column" style="padding: 100px">
+												<div class="ui negative massive message">
+													<div class="header">
+													    	The correct answer is {{main.answer}}.
+													</div>
+												</div>
+											</div>
+											<div class="two wide column"></div>
+										</div>
+										<div class="ui grid answer-selection">
+											<div class="one wide column"></div>
+											<div class="fourteen wide column">
+												<div class="ui grid">
+													<div class="ui five column grid">
+														<div class="column" ng-repeat="i in main.numberNames track by $index">
+															<div class="ui button answer-button" ng-click="main.updateAns($index+1)">{{$index+1}}<br>{{i}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="one wide column"></div>
+										</div>
+							        </div>
+						     	</div>
+					  		</div>
+					    </div>
+					     <div class="side 37">
+					    	<div id="card-shape" class="ui teal twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 28px;color: white;">{{main.reinforcements.message[main.student.scores[main.level-1]]}}<br><img class="ui big image" ng-src="{{main.reinforcements.pictures[main.student.scores[main.level-1]]}}"></center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					    <div class="side 38">
+					    	<div id="card-shape" style="background-color: white;" class="ui twelve wide column card">
+					      <div class="content">
+					       <div class="ui column stackable center page grid">
+					    		<div class="eight width column"><br><br>
+					    			<center style="font-size: 25px;color: teal;">Congratulations {{main.student.name}} for finishing all the 18 levels!<img class="ui big image" ng-src="assets/great.png"><br>
+					    				<button ng-click="main.resetSide()" class="ui primary button">
+												    FINISH
+										</button>
+					    			</center>
+								</div>
+							</div>
+					      </div></div>
+					    </div>
+					</div>
+				</div>
+			</div>
+			 <div class="ui grid bottom"><br><br></div>
+			 <div class="ui modal">
+			 	<div class="ui inverted segment">
+			 		<h1 style="color: white;">{{main.student.name}}</h1><br>
+		            <div class="ui teal inverted progress 0" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 1: {{main.percentage[0]}}%
+					 </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[0]}}</h5></center>
+					   <center><h5>Time: {{main.student.time[0]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[0]}}/5</h5></center>
+					</div>
+					<div class="ui blue inverted progress 1" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 2: {{main.percentage[1]}}%
+						</div>					   
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[1]}}</h5></center>
+					   <center><h5>Time: {{main.student.time[1]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[1]}}/5</h5></center>
+					</div>
+					<div class="ui violet inverted progress 2" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 3: {{main.percentage[2]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[2]}}</h5></center>
+					   <center><h5>Time: {{main.student.time[2]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[2]}}/5</h5></center>
+					</div>
+					<div class="ui purple inverted progress 3" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 4: {{main.percentage[3]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[3]}}</h5></center>
+					  <center><h5>Time: {{main.student.time[3]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[3]}}/5</h5></center>
+					</div>
+					<div class="ui pink inverted progress 4" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 5: {{main.percentage[4]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[4]}}</h5></center>
+					   <center><h5>Time: {{main.student.time[4]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[4]}}/5</h5></center>
+					</div>
+					<div class="ui red inverted progress 5" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 6: {{main.percentage[5]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[5]}}</h5></center>
+					   <center><h5>Time: {{main.student.time[5]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[5]}}/5</h5></center>
+					</div>
+					<div class="ui orange inverted progress 6" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 7: {{main.percentage[6]}}%
+					  </div>
+					</div>
+					<div class="content">
+					  	 <center><h5>Retries: {{main.student.retries[6]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[6]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[6]}}/5</h5></center>
+					  </div>
+					<div class="ui yellow inverted progress 7" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 8: {{main.percentage[7]}}%
+					  </div>
+					</div>
+					<div class="content">
+							<center><h5>Retries: {{main.student.retries[7]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[7]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[7]}}/5</h5></center>
+					</div>
+					<div class="ui olive inverted progress 8" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 9: {{main.percentage[8]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[8]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[8]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[8]}}/5</h5></center>
+					</div>
+					<div class="ui green inverted progress 9" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 10: {{main.percentage[9]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[9]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[9]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[9]}}/5</h5></center>
+					</div>
+					<div class="ui purple inverted progress 10" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 11: {{main.percentage[10]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[10]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[10]}}</h5></center>
+					  	<center><h5>Score: {{main.student.scores[10]}}/5</h5></center>
+					</div>
+					<div class="ui pink inverted progress 11" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 12: {{main.percentage[11]}}%
+					</div>
+					  </div>
+					 <div class="content">
+					 	 <center><h5>Retries: {{main.student.retries[11]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[11]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[11]}}/5</h5></center>
+					 </div>
+					<div class="ui red inverted progress 12" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 13: {{main.percentage[12]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[12]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[12]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[12]}}/5</h5></center>
+					</div>
+					<div class="ui orange inverted progress 13" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 14: {{main.percentage[13]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[13]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[13]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[13]}}/5</h5></center>
+					</div>
+					<div class="ui yellow inverted progress 14" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 15: {{main.percentage[14]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[14]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[14]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[14]}}/5</h5></center>
+					</div>
+					<div class="ui brown inverted progress 15" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 16: {{main.percentage[15]}}%
+					  </div>
+					</div>
+					<div class="content">
+							<center><h5>Retries: {{main.student.retries[15]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[15]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[15]}}/5</h5></center>
+					</div>
+					<div class="ui grey inverted progress 16" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 17: {{main.percentage[16]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[16]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[16]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[16]}}/5</h5></center>
+					</div>
+					<div class="ui black inverted progress 17" id="example1">
+					  <div class="bar"></div>
+					  <div class="label">Level 18: {{main.percentage[17]}}%
+					  </div>
+					</div>
+					<div class="content">
+						<center><h5>Retries: {{main.student.retries[17]}}</h5></center>
+					    <center><h5>Time: {{main.student.time[17]}}</h5></center>
+					  <center><h5>Score: {{main.student.scores[17]}}/5</h5></center>
+					</div>
+				</div>
+				<center> <button ng-click="main.reset()" class="ui big secondary button" >
+									  FINISH VIEWING
+									</button></center>
+        	</div>
+		</div>
+	
+	
+		<!-- <div class="ui inverted vertical footer segment form-page">
+		  <div class="ui container">
+		    <center> © Seco Aizaya 2018.&nbspAll Rights Reserved</center>
+		  </div>
+		</div> -->
+  	</div>
+		
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/main.controller.js"></script>
+    <script type="text/javascript" src="js/semantic.js"></script>
+
+</body>
+</html>
+
+<!-- 
+Author: Aizaya L. Seco && Donn Jerico B. Belmonte
+Date: March 10, 2018
+Description: main html5 for the Instruction Systems Development
+ -->

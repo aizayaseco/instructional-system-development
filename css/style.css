@@ -1,0 +1,114 @@
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+#card-shape{
+  height: 600px;
+  width: 800px;
+  background-color: #33B0A0;
+  border-radius: 10px;
+  /*margin-bottom: 50px;*/
+}
+
+#smallcard-shape{
+  height: 500px;
+  width: 700px;
+  background-color: #33B0A0;
+  border-radius: 10px;
+  /*margin-bottom: 50px;*/
+}
+
+.ui.grid.bottom{
+  margin-bottom: 50px;
+}
+
+.center.lower{
+  /*margin-top: 200px;*/
+}
+@media (min-height: 320px) {
+  .ui.footer.form-page { /* Increased specificity for SO snippet priority */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+.write-name {
+  font-size: 18px;
+  padding-top: 180px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.write-number{
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card.number{
+  height: 220px;
+}
+
+.green.label{
+  font-size: 15px;
+}
+
+div.btn {
+    display: inline-block;
+    border: 2px solid #ccc;
+    margin-right: 5px;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+div.btn.on {
+    background-color: #777;
+    color: white;
+}
+
+.card-pic-content {
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px;
+}
+
+.pic-number-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.answer-selection {
+  position: absolute;
+  bottom: 0px;
+}
+
+.answer-button {
+  width: 100px;
+  height: 75px;
+  font-size: 20px !important; 
+}
+
+.no-pic-number {
+  position: absolute; 
+  bottom: 100px; 
+  left: 90px; 
+  font-size: 180px;
+}
+
+.plus-sign {
+  padding-top: 80px !important;
+}
