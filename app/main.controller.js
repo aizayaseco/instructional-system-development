@@ -37,7 +37,7 @@ Description: main controller for the Instruction Systems Development best approp
         vm.items=[];
         vm.questions=[];// holds multiple arrays problems levels 1-18??
        
-       	vm.audio = new Audio('assets/classical_music.mp3');
+       	vm.audio = new Audio('assets/classical_music.mp3').play();
         vm.currentSide="1";
         vm.answer=null;
         vm.noAns=false;
